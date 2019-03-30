@@ -3,7 +3,26 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 
-from .models import Choice, Question
+from .models import *
+
+
+def game_create(request):
+
+def game_get(request, pk):
+
+def game_change_target(request, pk, word):
+
+def team(request, pk):
+
+def player(request, pk):
+
+def player_switch_team(request, pk, team_pk):
+
+def player_change_name(request, pk, name):
+
+def player_update_word(request, pk, word):
+
+# path('')
 
 
 class IndexView(generic.ListView):
