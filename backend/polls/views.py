@@ -10,6 +10,8 @@ def game_create(request):
 
 def game_get(request, pk):
 
+def game_create_team(request, pk):
+
 def game_change_target(request, pk, word):
 
 def team(request, pk):
