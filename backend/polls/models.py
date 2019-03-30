@@ -2,6 +2,7 @@ import datetime
 
 from django.db import models
 from django.utils import timezone
+# from django.contrib.auth.models import User
 
 
 class Word(models.Model):
@@ -14,10 +15,10 @@ class Word(models.Model):
 
 class Game(models.Model):
     target = models.ForeignKey(Word, on_delete=models.PROTECT)
-    master = models.ForeignKey(User, on_delete=models.CASCADE)
+    master = models.ForeignKey('Player', on_delete=models.CASCADE)
     invite = models.CharField(max_length=200) # three 4-letter words?
     created_date = models.DateTimeField(auto_now_add=True)
-    timeout = models.DurationField(default=timedelta(minutes=2))
+    timeout = models.DurationField(default=datetime.timedelta(minutes=2))
 
     def seconds_remaining(self):
         return self.created_date + self.timeout - timezone.now()
@@ -25,7 +26,7 @@ class Game(models.Model):
 class Team(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
 
-class User(models.Model):
+class Player(models.Model):
     name = models.CharField(max_length=200)
     word = models.ForeignKey(Word, on_delete=models.PROTECT)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
