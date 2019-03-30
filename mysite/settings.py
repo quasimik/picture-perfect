@@ -92,10 +92,10 @@ if os.getenv('GAE_APPLICATION', None):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'HOST': '/cloudsql/[YOUR-CONNECTION-NAME]',
-            'USER': '[YOUR-USERNAME]',
-            'PASSWORD': '[YOUR-PASSWORD]',
-            'NAME': '[YOUR-DATABASE]',
+            'HOST': '/cloudsql/picture-perfect-lahax19:us-west2:polls-instance',
+            'USER': 'mike',
+            'PASSWORD': 'mike',
+            'NAME': 'polls',
         }
     }
 else:
@@ -110,9 +110,9 @@ else:
             'ENGINE': 'django.db.backends.mysql',
             'HOST': '127.0.0.1',
             'PORT': '3306',
-            'NAME': '[YOUR-DATABASE]',
-            'USER': '[YOUR-USERNAME]',
-            'PASSWORD': '[YOUR-PASSWORD]',
+            'NAME': 'polls',
+            'USER': 'mike',
+            'PASSWORD': 'mike',
         }
     }
 # [END db_setup]
