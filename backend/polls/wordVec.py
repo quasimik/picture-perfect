@@ -1,4 +1,5 @@
 from gensim.models import KeyedVectors
+import random
 
 class WordVec:
     __shared_state = {}
@@ -12,3 +13,7 @@ class WordVec:
         except AttributeError:
             self.model = KeyedVectors.load_word2vec_format("word2vec-50d.txt")
             self.__wordVec_loaded = True
+
+    def getWord(self):
+        return random.choice(list(self.model.wv.vocab))
+
