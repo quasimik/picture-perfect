@@ -3,7 +3,7 @@ import { Route, Link, withRouter } from 'react-router-dom';
 import { Menu, Container } from 'semantic-ui-react';
 import './App.css';
 
-import StartPageButton from './StartPageButton';
+import StartPage from './StartPage';
 class App extends Component {
 
   state = {
@@ -21,8 +21,7 @@ class App extends Component {
             </Menu.Item>
           </Container>
         </Menu>
-        <Route exact path="/" render={(props) => <StartPageButton {...props} buttonText="Create a room!" />}/>
-        <Route exact path="/" render={(props) => <StartPageButton {...props} buttonText="Join a room!"/>}/>
+        <Route exact path="/" render={(props) => <StartPage {...props}/>}/>
         <Route path="/:room"  render={(props) => <div/>} />
       </div>
     );
