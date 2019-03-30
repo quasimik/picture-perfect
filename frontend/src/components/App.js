@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import '../App.css';
+import { Route, Link, withRouter } from 'react-router-dom';
+import './App.css';
 
 class App extends Component {
   render() {
@@ -23,4 +24,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);
