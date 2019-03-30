@@ -1,5 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-class JoinRoom extends React.Component {
-    
+class JoinRoom extends Component {
+    render() {
+      return (
+        <div>
+          Join Room
+        </div>
+      )
+    }
 }
+
+export default JoinRoom;
