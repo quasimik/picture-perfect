@@ -6,7 +6,7 @@ class StartPage extends Component {
         return (
             <Container>
             <Segment placeholder>
-                <Grid columns={2} rows={2}>
+                <Grid columns={2} rows={2} stackable>
                     <Grid.Row>
                         <Grid.Column>
                             <h2>Create a new game</h2>
