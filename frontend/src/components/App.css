@@ -1,0 +1,23 @@
+.App {
+  text-align: center;
+  padding-top: 5em;
+  padding-bottom: 5em;
+}
+
+.centered {
+  margin: 0 auto !important;
+}
+
+.StartLabel {
+  text-align: left;
+}
+
+.GameEnd {
+  text-align: left;
+}
+
+.Floating { 
+  position: fixed;
+  bottom: 5em;
+  right: 2em;
+}
