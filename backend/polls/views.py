@@ -95,6 +95,8 @@ def player_update_word(request, pk, word):
     player.save()
     return SuccessResponse
 
+def index_view(request):
+    return render(request, 'polls/index.html')
 
 # class IndexView(generic.ListView):
 #     template_name = 'polls/index.html'

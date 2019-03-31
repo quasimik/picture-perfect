@@ -4,6 +4,7 @@ from . import views
 
 app_name = 'polls'
 urlpatterns = [
+    path('', views.index_view, name='index'),
     # path('word/get/') # get random word
     # path('word/get/<int:length>/<float:freq>/') # get random word, restricted by length and minimum freq
     path('game/create/', views.game_create, name="game_create"), # start new game
