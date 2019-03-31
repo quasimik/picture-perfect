@@ -24,8 +24,14 @@ class GameRoom extends Component {
     render() {
         const { teamName, target, teamWordList } = this.props;
         const buttonType = this.state.buttonType; // or 'minus'
-        const dataList = Object.entries(teamWordList).map( (name, word) => <GameListEntry name={name} word={word}/>);
-        //*
+        const dataList = (Object.entries(teamWordList)).map( ([index, keyValuePair]) =>
+        {
+            let data = <div></div>;
+            for (let key in keyValuePair) {
+                data=<GameListEntry name={key} word={keyValuePair[key]}/>            
+            }
+            return data;
+        });
         return (
             <Segment>
             <Card centered>
@@ -42,6 +48,8 @@ class GameRoom extends Component {
                     <WordSubmitter type={buttonType} flip={this.flipButtonState}/>
                 </Card.Content>
             </Card>
+            <br/>
+            <Button color='red'>End Game</Button>
             </Segment>
         );
     }
@@ -52,7 +60,7 @@ class GameListEntry extends Component {
             return (
                 <List.Item>
                     <List.Content>
-                        <List.Header>{this.props.name}: {this.props.word}</List.Header>
+                        <List.Header className='GameRoom'>{this.props.name}: {this.props.word}</List.Header>
                     </List.Content>
                 </List.Item>
             );
