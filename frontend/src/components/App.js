@@ -39,14 +39,18 @@ class App extends Component {
       let tmp = this.state;
       tmp.player.id = data.id;
       this.setState(tmp);
+      console.log(data.id)
       return data.id;
     })
     .then(this.getPlayer)
-    .then(this.getTeam);
+    .then(this.getTeam)
+    .then(this.getGame)
+    .then((game_id) => {
+      this.props.history.push('/' + this.state.game.invite)
+    });
   }
 
-  joinGame = (invite) => {
-    db.join_game(invite)
+  joinGame = (invite) => db.join_game(invite)
     .then((data) => {
       let tmp = this.state;
       tmp.player.id = data.id;
@@ -54,11 +58,24 @@ class App extends Component {
       return data.id;
     })
     .then(this.getPlayer)
-    .then(this.getTeam);
+    .then(this.getTeam)
+    .then(this.getGame);
+
+  createTeam = (id) => {
+    db.create_team(id)
+    .then((data) => {
+
+    })
+    .then(this.getGame(id))
   }
 
-  getPlayer = (id) => {
-    db.player_status(id)
+  switchTeam = (player_id, team_id) => db.switch_team(player_id, team_id)
+    .then((data) => {
+      return data.id
+    })
+    .then(this.getTeam);
+
+  getPlayer = (id) => db.player_status(id)
     .then((data) => {
       console.log(data)
       let tmp = this.state;
@@ -71,10 +88,8 @@ class App extends Component {
       this.setState(tmp);
       return data.team;
     });
-  }
 
-  getTeam = (id) => {
-    db.team_status(id)
+  getTeam = (id) => db.team_status(id)
     .then((data) => {
       console.log(data)
       let tmp = this.state;
@@ -83,25 +98,22 @@ class App extends Component {
       tmp.team.players = data.players;
       this.setState(tmp);
       return data.game;
-    })
-  }
+    });
 
-  getGame = (id) => {
-    db.game_status(id)
+  getGame = (id) => db.game_status(id)
     .then((data) => {
       console.log(data)
       let tmp = this.state;
       tmp.game.id = id;
       tmp.game.target = data.target;
       tmp.game.invite = data.invite;
-      
       tmp.game.teams = data.teams;
       this.setState(tmp);
       return data.game;
     });
-  }
 
   render() {
+    console.log("history", this.props.history);
     return (
       <div className="App">
         <Menu fixed='top' inverted color="teal">
@@ -114,7 +126,7 @@ class App extends Component {
           </Container>
         </Menu>
         <Route exact path="/" render={(props) => <StartPage {...props} create={this.createGame} />}/>
-        <Route path="/:room"  render={(props) => <TeamJoin {...props} playerName="Bobbeh" playerKey="9"/>} />
+        <Route path="/:room"  render={(props) => <TeamJoin {...props} data={this.state} join={this.joinGame} />} />
       </div>
     );
   }
