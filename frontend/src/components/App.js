@@ -23,7 +23,7 @@ class App extends Component {
             <Menu.Item header>Room ID</Menu.Item>
           </Container>
         </Menu>
-        <Route exact path="/" render={(props) => <TeamJoin {...props} playerName="Bobbeh" playerKey="9"/>}/>
+        <Route exact path="/" render={(props) => <StartPage {...props} playerName="Bobbeh" playerKey="9"/>}/>
         <Route path="/:room"  render={(props) => <div/>} />
       </div>
     );

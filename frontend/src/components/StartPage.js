@@ -7,28 +7,27 @@ class StartPage extends Component {
             <Container>
             <Segment placeholder>
                 <Grid columns={2} rows={2} stackable>
-                    <Grid.Row>
-                        <Grid.Column>
+                    <Grid.Column as="Segment">
+                        <Grid.Row>
                             <h2>Create a new game</h2>
-                        </Grid.Column>
-                        <Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row>
+                            <StartPageButton buttonText="Create" color="red"/>
+                        </Grid.Row>
+                    </Grid.Column>
+                    <Grid.Column as="Segment">
+                        <Grid.Row>
                             <h2>Join an existing game</h2>
                             <Form>
                                 <StartPageField label="Room ID"></StartPageField>
                                 <StartPageField label="Player Name"></StartPageField>
                             </Form>
-                        </Grid.Column>
-                    </Grid.Row>
-                    <Grid.Row>
-                        <Grid.Column>
-                            <StartPageButton buttonText="Create" color="red"/>
-                        </Grid.Column>
-                        <Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row>
                             <StartPageButton buttonText="Join" color="green"/>
-                        </Grid.Column>
-                    </Grid.Row>        
+                        </Grid.Row>
+                    </Grid.Column>
                 </Grid>
-                <Divider vertical></Divider>
             </Segment></Container>
         )
     }
