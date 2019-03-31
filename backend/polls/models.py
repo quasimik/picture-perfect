@@ -19,6 +19,7 @@ class Game(models.Model):
     invite = models.CharField(max_length=200) # three 4-letter words?
     created_datetime = models.DateTimeField(default=timezone.now)
     timeout = models.DurationField(default=datetime.timedelta(minutes=2))
+    state = models.IntegerField(default=0)
 
     def seconds_remaining(self):
         return self.created_date + self.timeout - timezone.now()
