@@ -51,7 +51,8 @@ class TeamJoinBox extends Component {
         const button = <Button basic color='green' onClick={this.props.joinTeam}>Join {teamName}</Button>;
 
         return (
-            <Card>
+            <div>
+            <Card centered>
                 <Card.Content>
                     <Card.Header>{teamName}</Card.Header>
                 </Card.Content>
@@ -62,6 +63,8 @@ class TeamJoinBox extends Component {
                     {button}
                 </Card.Content>
             </Card>
+            <br/>
+            </div>
         );
     }
 }
