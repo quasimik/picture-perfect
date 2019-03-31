@@ -111,7 +111,8 @@ def player_switch_team(request, pk, team_pk):
     team = get_object_or_404(Team, pk=team_pk)
     player.team = team
     player.save()
-    return SuccessResponse
+    # return SuccessResponse
+    return redirect('/team/%s' % str(team.id))
 
 # returns nothing
 def player_change_name(request, pk, name):
