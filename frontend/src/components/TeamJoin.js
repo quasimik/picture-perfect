@@ -17,20 +17,11 @@ class TeamJoin extends Component {
             "Team 1" : [ new Member(0, "Jon"), new Member(1, "John"), new Member(2, "Juan"), new Member(3, "Justin") ],
             "Team 2" : [ new Member(4, "Alice"), new Member(5, "Bob"), new Member(6, "Eve"), new Member(7, "Mallory"), new Member(8, "Trent")]
         },
-        time: 500
+        timeRemaining: 500
     }
 
     joinTeam = (event, props) => {
-        let teams = this.state.teamList[props.teamName];
-        teams.append(new Member(this.props.playerKey, this.props.playerName));
-        const newState = {
-            teamList: teams
-        }
-        this.setState(newState);
-    }
-
-    leaveTeam = (event, props) => {
-
+        // Do something here to join the team
     }
 
     render() {
@@ -41,7 +32,7 @@ class TeamJoin extends Component {
         const boxes = (Object.entries(teams)).map( ([team, members]) => <TeamJoinBox teamName={team} memberList={members} joinTeam={this.joinTeam}/> );
         return (
             <div>
-                <h3>Time Remaining: {this.state.time}</h3>
+                <h3>Time Remaining: {this.state.timeRemaining}</h3>
                 <Segment>
                     <h2>Hello {playerName} ({playerKey}), join a team!</h2>
                     <div>{boxes}</div>
@@ -56,6 +47,9 @@ class TeamJoinBox extends Component {
         const teamName = this.props.teamName;
         const memberList = this.props.memberList;
         const TeamMemberList = memberList.map( (member) => <TeamMember memberName={member.name}/> );
+        
+        const button = <Button basic color='green' onClick={this.props.joinTeam}>Join {teamName}</Button>;
+
         return (
             <Card>
                 <Card.Content>
@@ -65,9 +59,7 @@ class TeamJoinBox extends Component {
                     {TeamMemberList}
                 </Card.Content>
                 <Card.Content extra>
-                    <Button basic color='green' onClick={this.props.joinTeam}>
-                        Join Team!
-                    </Button>
+                    {button}
                 </Card.Content>
             </Card>
         );
