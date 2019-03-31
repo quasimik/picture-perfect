@@ -4,6 +4,7 @@ import { Menu, Container } from 'semantic-ui-react';
 import './App.css';
 
 import StartPage from './StartPage';
+import TeamJoin from './TeamJoin';
 class App extends Component {
 
   state = {
@@ -21,7 +22,7 @@ class App extends Component {
             </Menu.Item>
           </Container>
         </Menu>
-        <Route exact path="/" render={(props) => <StartPage {...props}/>}/>
+        <Route exact path="/" render={(props) => <TeamJoin {...props} playerName="Bobbeh" playerKey="9"/>}/>
         <Route path="/:room"  render={(props) => <div/>} />
       </div>
     );
