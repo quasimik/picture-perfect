@@ -74,7 +74,6 @@ class GameRoom extends Component {
                 </Card.Content>
             </Card>
             <br/>
-            <Button color='orange'>End Game</Button>
             </Segment>
         );
     }
