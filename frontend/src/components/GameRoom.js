@@ -24,7 +24,7 @@ class GameRoom extends Component {
     render() {
         const { teamName, target, teamWordList } = this.props;
         const buttonType = this.state.buttonType; // or 'minus'
-        //const dataList = Object.entries(teamWords).map( (name, word) => <GameListEntry name={name} word={word}/>);
+        const dataList = Object.entries(teamWordList).map( (name, word) => <GameListEntry name={name} word={word}/>);
         //*
         return (
             <Segment>
@@ -35,9 +35,7 @@ class GameRoom extends Component {
                 </Card.Content>
                 <Card.Content>
                     <List floated='left'>
-                    <GameListEntry name="hi" word="word"/>
-                    <GameListEntry name="hi" word="word"/>
-                    <GameListEntry name="hi" word="word"/>
+                    {dataList}
                     </List>
                 </Card.Content>
                 <Card.Content extra>
