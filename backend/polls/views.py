@@ -1,5 +1,5 @@
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect # noqa: 401
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, get_list_or_404
 from django.urls import reverse
 from django.views import generic
 from django.forms.models import model_to_dict
@@ -28,13 +28,14 @@ def game_create(request):
     except:
         raise
     else:
-        return SuccessResponse
+        return JsonResponse({'status': 200, 'message': 'Success', 'id': game.id})
 
 def game_join(request, invite):
+    # Joins the first team by default
     try:
         print(invite)
         game = Game.objects.get(invite=invite)
-        team = get_object_or_404(Team, game=game)
+        team = get_list_or_404(Team, game=game)[0]
         player = Player(team=team)
         player.name = wv.getWord()
         player.save()
@@ -51,10 +52,16 @@ def game_get(request, pk):
     return JsonResponse(responseDict)
 
 def game_create_team(request, pk):
-    pass
+    game = get_object_or_404(Game, pk=pk)
+    team = Team(game=game)
+    team.save()
+    return JsonResponse({'status': 200, 'message': 'Success', 'id': team.id})
 
 def game_change_target(request, pk, word):
-    pass
+    game = get_object_or_404(Game, pk=pk)
+    game.target = word
+    game.save()
+    return SuccessResponse
 
 def team(request, pk):
     responseDict = {'id': pk, 'status': 200, 'message': 'success'}
@@ -68,13 +75,25 @@ def player(request, pk):
     return JsonResponse(responseDict)
 
 def player_switch_team(request, pk, team_pk):
-    pass
+    player = get_object_or_404(Player, pk=pk)
+    team = get_object_or_404(Team, pk=team_pk)
+    player.team = team
+    player.save()
+    return SuccessResponse
 
 def player_change_name(request, pk, name):
-    pass
+    player = get_object_or_404(Player, pk=pk)
+    player.name = name
+    player.save()
+    return SuccessResponse
 
 def player_update_word(request, pk, word):
-    pass
+    if not wv.wordExists(word):
+        return JsonResponse({'status': 400, 'message': 'Word does not exist.'})
+    player = get_object_or_404(Player, pk=pk)
+    player.word = word
+    player.save()
+    return SuccessResponse
 
 
 # class IndexView(generic.ListView):
