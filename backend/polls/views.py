@@ -2,6 +2,7 @@ from django.http import JsonResponse, HttpResponse, HttpResponseRedirect # noqa:
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
+from django.forms.models import model_to_dict
 
 from .models import *
 from .wordVec import WordVec
@@ -43,7 +44,11 @@ def game_join(request, invite):
         return SuccessResponse
 
 def game_get(request, pk):
-    pass
+    responseDict = get_object_or_404(Game.objects.all().values('id', 'target', 'invite', 'created_datetime'), pk=pk)
+    responseDict['status'] = 200
+    responseDict['message'] = "success"
+    responseDict['teams'] = list(Team.objects.filter(game=pk).values('id'))
+    return JsonResponse(responseDict)
 
 def game_create_team(request, pk):
     pass
@@ -52,10 +57,15 @@ def game_change_target(request, pk, word):
     pass
 
 def team(request, pk):
-    pass
+    responseDict = {'id': pk, 'status': 200, 'message': 'success'}
+    responseDict['players'] = list(Player.objects.filter(team=pk).values('id'))
+    return JsonResponse(responseDict)
 
 def player(request, pk):
-    pass
+    responseDict = get_object_or_404(Player.objects.all().values('id', 'name', 'word', 'word_add', 'team', 'master'), pk=pk)
+    responseDict['status'] = 200
+    responseDict['message'] = "success"
+    return JsonResponse(responseDict)
 
 def player_switch_team(request, pk, team_pk):
     pass
