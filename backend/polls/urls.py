@@ -18,8 +18,8 @@ urlpatterns = [
     path('player/<int:pk>/update_word/<str:word>/', views.player_update_word, name="player_update_word"), # update played word in game
     # path('')
 
-    path('', views.IndexView.as_view(), name='index'),
-    path('<int:pk>/', views.DetailView.as_view(), name='detail'),
-    path('<int:pk>/results/', views.ResultsView.as_view(), name='results'),
-    path('<int:question_id>/vote/', views.vote, name='vote'),
+    # path('', views.IndexView.as_view(), name='index'),
+    # path('<int:pk>/', views.DetailView.as_view(), name='detail'),
+    # path('<int:pk>/results/', views.ResultsView.as_view(), name='results'),
+    # path('<int:question_id>/vote/', views.vote, name='vote'),
 ]
