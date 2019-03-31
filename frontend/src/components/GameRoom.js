@@ -49,7 +49,7 @@ class GameRoom extends Component {
                 </Card.Content>
             </Card>
             <br/>
-            <Button color='red'>End Game</Button>
+            <Button color='orange'>End Game</Button>
             </Segment>
         );
     }
@@ -75,16 +75,17 @@ class WordSubmitter extends Component {
 
     render() {
         const buttonType = this.props.type;
+        const buttonColor = (this.props.type === "plus") ? "green" : "red";
         const typeFlipper = this.props.flip;
         return (
             <Button.Group>
-            <Button icon onClick={typeFlipper}>
+            <Button icon onClick={typeFlipper} color={buttonColor}>
                 <Icon name={buttonType}/>
             </Button>
                 <Form>
                     <Input placeholder="Enter a word"></Input>
                 </Form>
-            <Button>Submit</Button>
+            <Button color="blue">Submit</Button>
             </Button.Group>
         );
     }
