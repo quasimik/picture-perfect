@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Icon, Segment, Divider, Grid, Form, Input, Container, Card, List, Responsive, Dropdown } from 'semantic-ui-react';
+import { Button, Icon, Segment, Form, Input, Card, List } from 'semantic-ui-react';
 
 // Needs the player's teamName and the target word. Also needs some list of players and their submitted words ("" if no submission)
 class GameRoom extends Component {
@@ -22,9 +22,7 @@ class GameRoom extends Component {
     }
 
     render() {
-        const teamName = this.props.teamName;
-        const target = this.props.target;
-        const teamWordList = this.props.teamWordList;
+        const { teamName, target, teamWordList } = this.props;
         const buttonType = this.state.buttonType; // or 'minus'
         //const dataList = Object.entries(teamWords).map( (name, word) => <GameListEntry name={name} word={word}/>);
         //*

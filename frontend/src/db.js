@@ -5,9 +5,9 @@ const server = "http://0b946ad8.ngrok.io/";
 class Data {
 
   new_game = () => {
-    fetch(server + 'game/create/')
+    return fetch(server + 'game/create/')
     .then((response) => {
-      console.log(response);
+      console.log("new_game", response);
       return response.json()
     })
     .catch((e) => {
@@ -16,9 +16,9 @@ class Data {
   }
 
   join_game = (invite) => {
-    fetch(server + 'game/join/' + invite + '/')
+    return fetch(server + 'game/join/' + invite + '/')
     .then((response) => {
-      console.log(response)
+      console.log("join_game", response)
       return response.json()
     })
     .catch((e) => {
@@ -27,9 +27,9 @@ class Data {
   }
 
   game_status = (game_id) => {
-    fetch(server + 'game/' + game_id + '/')
+    return fetch(server + 'game/' + game_id + '/')
     .then((response) => {
-      console.log(response)
+      console.log("game_status", response)
       return response.json()
     })
     .catch((e) => {
@@ -38,9 +38,9 @@ class Data {
   }
 
   create_team = (game_id) => {
-    fetch(server + 'game/' + game_id + '/create_team/')
+    return fetch(server + 'game/' + game_id + '/create_team/')
     .then((response) => {
-      console.log(response)
+      console.log("create_team", response)
       return response.json()
     })
     .catch((e) => {
@@ -49,9 +49,9 @@ class Data {
   }
 
   change_target = (game_id, target) => {
-    fetch(server + 'game/' + game_id + '/change_target/' + target + '/')
+    return fetch(server + 'game/' + game_id + '/change_target/' + target + '/')
     .then((response) => {
-      console.log(response)
+      console.log("change_target", response)
       return response.json()
     })
     .catch((e) => {
@@ -60,9 +60,9 @@ class Data {
   }
 
   team_status = (team_id) => {
-    fetch(server + 'team/' + team_id + '/')
+    return fetch(server + 'team/' + team_id + '/')
     .then((response) => {
-      console.log(response)
+      console.log("team_status", response)
       return response.json()
     })
     .catch((e) => {
@@ -71,9 +71,9 @@ class Data {
   }
 
   player_status = (player_id) => {
-    fetch(server + 'player/' + player_id + '/')
+    return fetch(server + 'player/' + player_id + '/')
     .then((response) => {
-      console.log(response)
+      console.log("player_status", response)
       return response.json()
     })
     .catch((e) => {
@@ -82,9 +82,9 @@ class Data {
   }
 
   switch_team = (player_id, team_id) => {
-    fetch(server + 'player/' + player_id + '/switch_team/' + team_id + '/')
+    return fetch(server + 'player/' + player_id + '/switch_team/' + team_id + '/')
     .then((response) => {
-      console.log(response)
+      console.log("switch_team", response)
       return response.json()
     })
     .catch((e) => {
@@ -93,9 +93,9 @@ class Data {
   }
 
   change_name = (player_id, name) => {
-    fetch(server + 'player/' + player_id + '/change_name/' + name + '/')
+    return fetch(server + 'player/' + player_id + '/change_name/' + name + '/')
     .then((response) => {
-      console.log(response)
+      console.log("change_name", response)
       return response.json()
     })
     .catch((e) => {
@@ -105,9 +105,9 @@ class Data {
 
   update_word = (player_id, word, add) => {
     var word_add = add? "add":"sub";
-    fetch(server + 'player/' + player_id + '/update_word/' + word + '/' + word_add + '/')
+    return fetch(server + 'player/' + player_id + '/update_word/' + word + '/' + word_add + '/')
     .then((response) => {
-      console.log(response)
+      console.log("update_word", response)
     })
     .catch((e) => {
       console.error(e);
