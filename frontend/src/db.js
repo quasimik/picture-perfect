@@ -73,7 +73,7 @@ class Data {
   player_status = (player_id) => {
     return fetch(server + 'player/' + player_id + '/')
     .then((response) => {
-      console.log("player_status", response)
+      // console.log("player_status", response)
       return response.json()
     })
     .catch((e) => {
@@ -113,6 +113,27 @@ class Data {
       console.error(e);
     });
   }
+
+  start_game = (game_id) => {
+    return fetch(server + 'game/' + game_id + '/start/')
+    .then((response) => {
+      console.log("start_game", response)
+    })
+    .catch((e) => {
+      console.error(e);
+    });
+  }
+
+  end_game = (game_id) => {
+    return fetch(server + 'game/' + game_id + '/end/')
+    .then((response) => {
+      console.log("end_game", response)
+    })
+    .catch((e) => {
+      console.error(e);
+    });
+  }
+
 }
 
 var db = new Data();
