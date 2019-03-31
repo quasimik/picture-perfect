@@ -17,7 +17,6 @@ For example, suppose
 
 then the team will get a moderately high score, because "mountain"+"fire" is close in meaning to "volcano".
 
->>>>>>> Stashed changes
 And if there are 5 players in the team:
 
 * the target word is "volcano"
