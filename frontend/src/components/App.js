@@ -62,7 +62,7 @@ class App extends Component {
     .then((data) => {
       console.log(data)
       let tmp = this.state;
-      tmp.player.id = data.id;
+      tmp.player.id = id;
       tmp.player.name = data.name;
       tmp.player.word = data.word;
       tmp.player.add = data.word_add;
@@ -78,11 +78,27 @@ class App extends Component {
     .then((data) => {
       console.log(data)
       let tmp = this.state;
-      tmp.game = data.game;
-      tmp.players = data.players;
+      tmp.team.id = id;
+      tmp.team.game = data.game;
+      tmp.team.players = data.players;
       this.setState(tmp);
       return data.game;
     })
+  }
+
+  getGame = (id) => {
+    db.game_status(id)
+    .then((data) => {
+      console.log(data)
+      let tmp = this.state;
+      tmp.game.id = id;
+      tmp.game.target = data.target;
+      tmp.game.invite = data.invite;
+      
+      tmp.game.teams = data.teams;
+      this.setState(tmp);
+      return data.game;
+    });
   }
 
   render() {

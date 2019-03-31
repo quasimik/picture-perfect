@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Icon, Segment, Divider, Grid, Form, Input, Container } from 'semantic-ui-react';
 
+// Component requires no props
 class StartPage extends Component {
     render() {
         return (
