@@ -17,8 +17,7 @@ class TeamJoin extends Component {
         teamList: {
             "Team 1" : [ new Member(0, "Jon"), new Member(1, "John"), new Member(2, "Juan"), new Member(3, "Justin") ],
             "Team 2" : [ new Member(4, "Alice"), new Member(5, "Bob"), new Member(6, "Eve"), new Member(7, "Mallory"), new Member(8, "Trent")]
-        },
-        timeRemaining: 500
+        }
     }
 
     joinTeam = (event, props) => {
@@ -32,13 +31,11 @@ class TeamJoin extends Component {
 
         const boxes = (Object.entries(teams)).map( ([team, members]) => <TeamJoinBox teamName={team} memberList={members} joinTeam={this.joinTeam}/> );
         return (
-            <div>
-                <h3>Time Remaining: {this.state.timeRemaining}</h3>
-                <Segment>
-                    <h2>Hello {playerName} ({playerKey}), join a team!</h2>
-                    <div>{boxes}</div>
-                 </Segment>
-            </div>
+            <Segment>
+                <h2>Hello {playerName}, join a team!</h2>
+                <div>{boxes}</div>
+                <Button color='blue'>Create a new team!</Button>
+            </Segment>
         );
     }
 }
