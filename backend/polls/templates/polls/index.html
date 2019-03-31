@@ -1,9 +1,35 @@
-{% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Picture Perfect API</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.3/css/uikit.min.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.3/js/uikit.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.3/js/uikit-icons.min.js"></script>
+    </head>
+    <body>
+        <div class="uk-container uk-container-small">
+
+            {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+            <div class="uk-child-width-1-1@m uk-grid-medium uk-grid-match uk-flex uk-flex-column uk-flex-center uk-margin-top" uk-grid>
+                <div><div class="uk-card uk-card-default uk-card-body">
+                    <h1>Picture Perfect API</h1>
+                    <ul>
+                        <li><code>game/&langle;int:pk&rangle;/</code></li>
+                        <li><code>game/create/</code></li>
+                        <li><code>game/join/&langle;str:invite&rangle;/</code></li>
+                        <li><code>game/&langle;int:pk&rangle;/create_team/</code></li>
+                        <li><code>game/&langle;int:pk&rangle;/change_target/&langle;str:word&rangle;/</code></li>
+                        <li><code>team/&langle;int:pk&rangle;/</code></li>
+                        <li><code>player/&langle;int:pk&rangle;/</code></li>
+                        <li><code>player/&langle;int:pk&rangle;/switch_team/&langle;int:team_pk&rangle;/</code></li>
+                        <li><code>player/&langle;int:pk&rangle;/change_name/&langle;str:name&rangle;/</code></li>
+                        <li><code>player/&langle;int:pk&rangle;/update_word/&langle;str:word&rangle;/&langle;str:word_add&rangle;/</code></li>
+                    </ul>
+                </div></div>
+            </div>
+        </div>
+    </body>
+</html>
