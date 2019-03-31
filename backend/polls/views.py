@@ -51,6 +51,7 @@ def game_get(request, pk):
     responseDict['message'] = "success"
     responseDict['teams'] = list(Team.objects.filter(game=pk).values('id'))
     return JsonResponse(responseDict)
+    # return HttpResponse('fuck u')
 
 def game_create_team(request, pk):
     game = get_object_or_404(Game, pk=pk)
