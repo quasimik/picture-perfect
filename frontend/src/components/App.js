@@ -69,11 +69,11 @@ class App extends Component {
     .then(this.getTeam)
     .then(this.getGame);
 
-  createTeam = (id) => db.create_team(id)
+  createTeam = () => db.create_team(this.state.game.id)
     .then(this.parseTeam)
     .then(this.getGame)
 
-  switchTeam = (player_id, team_id) => db.switch_team(player_id, team_id)
+  switchTeam = (team_id) => db.switch_team(this.state.player.id, team_id)
     .then(this.parseTeam)
     .then(this.getGame);
 
@@ -126,20 +126,20 @@ class App extends Component {
     (this.state.game.id !== 0) && this.getGame(this.state.game.id);
     return (
       <div className="App">
-        <Menu fixed='top' inverted color="teal">
+        <Menu fixed='top' inverted size="massive">
           <Container text>
-            {this.props.history && 
-              <Menu.Item icon="left arrow" onClick={this.props.history.goBack} />}
+            {/* {this.props.history && 
+              <Menu.Item icon="left arrow" onClick={this.props.history.goBack} />} */}
             <Menu.Item header>Lexica</Menu.Item>
             <Menu.Item header>Room: {this.state.game.invite} </Menu.Item>
             {/* <Menu.Item header>Time Remaining: 500</Menu.Item> */}
+            {this.state.game.status !== undefined && this.state.game.status !== 2 &&
             <Menu.Item>
-              {this.state.game.status !== undefined && this.state.game.status !== 2 &&
               <Button primary 
                 content={this.state.game.status === 0 ? "Start" : "End"}
                 onClick={this.state.game.status === 0 ? this.startGame : this.endGame}
-              />}
-            </Menu.Item>
+              />
+            </Menu.Item>}
           </Container>
         </Menu>
         <Route exact path="/" render={(props) => <StartPage {...props} create={this.createGame} data={this.state}/>}/>

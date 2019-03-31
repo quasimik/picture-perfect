@@ -73,7 +73,7 @@ class Data {
   team_status = (team_id) => {
     return fetch(server + 'team/' + team_id + '/')
     .then((response) => {
-      console.log("team_status", response)
+      // console.log("team_status", response)
       return response.json()
     })
     .catch((e) => {
@@ -93,6 +93,7 @@ class Data {
   }
 
   switch_team = (player_id, team_id) => {
+    console.log("switch", player_id, team_id)
     return fetch(server + 'player/' + player_id + '/switch_team/' + team_id + '/')
     .then((response) => {
       console.log("switch_team", response)

@@ -14,13 +14,13 @@ class StartPage extends Component {
         return (
             <Container>
             <Segment placeholder>
-                <Grid columns={2} stackable>
+                <Grid stackable>
                     <Grid.Column>
                         <Divider horizontal>Create a new game</Divider>
                         <br/><br/><br/>
                         <StartPageButton buttonText="Create" color="red" onClick={this.props.create}/>
                     </Grid.Column>
-                    <Grid.Column>
+                    {/* <Grid.Column>
                         <Divider horizontal>Join an existing game</Divider>
                         <Grid.Row>
                             <Form>
@@ -32,7 +32,7 @@ class StartPage extends Component {
                         <Grid.Row>
                             <StartPageButton buttonText="Join" color="green"/>
                         </Grid.Row>
-                    </Grid.Column>
+                    </Grid.Column> */}
                 </Grid>
             </Segment></Container>
         )

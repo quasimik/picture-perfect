@@ -27,16 +27,18 @@ class TeamJoin extends Component {
   componentDidMount() {
     let { invite } = this.props.match.params;
     console.log("invite:", invite);
-    db.game_status_invite(invite)
-    .then((data) => {
-      if(data.status !== 2) {
-        console.log("joining", invite)
-        this.props.joinGame(invite)
-      }
-      else {
-        this.props.getGame(data.id);
-      }
-    });
+    if(this.props.data.player.id === 0) {
+      db.game_status_invite(invite)
+      .then((data) => {
+        if(data.status !== 2) {
+          console.log("joining", invite)
+          this.props.joinGame(invite)
+        }
+        else {
+          this.props.getGame(data.id);
+        }
+      });
+    }
   }
 
   dataToMember = (data) => {
@@ -54,7 +56,7 @@ class TeamJoin extends Component {
       })
       .then((memberList) => {
         var tmp = this.state;
-        tmp.teamList["Team " + team] = memberList;
+        tmp.teamList[team] = memberList;
         this.setState(tmp);
       })
   }
@@ -67,7 +69,7 @@ class TeamJoin extends Component {
     const teams = this.state.teamList;
     const playerName = this.props.data.player.name;
 
-    const boxes = (Object.entries(teams)).map( ([team, members]) => <TeamJoinBox teamName={team} memberList={members} joinTeam={this.joinTeam}/> );
+    const boxes = (Object.entries(teams)).map( ([team, members]) => <TeamJoinBox team={team} memberList={members} switchTeam={this.props.switchTeam}/> );
     return (
       <div>
         {/* <h3>Time Remaining: {this.state.timeRemaining}</h3> */}
@@ -82,12 +84,18 @@ class TeamJoin extends Component {
 }
 
 class TeamJoinBox extends Component {
+
+  switchTeam = () => { 
+    this.props.switchTeam(this.props.team)
+  }
+
   render() {
-    const teamName = this.props.teamName;
+    const team = this.props.team;
+    const teamName = "Team " + team;
     const memberList = this.props.memberList;
     const TeamMemberList = memberList.map( (member) => <TeamMember memberName={member.name}/> );
     
-    const button = <Button basic color='green' onClick={this.props.joinTeam}>Join {teamName}</Button>;
+    const button = <Button basic color='green' onClick={this.switchTeam}>Join {teamName}</Button>;
 
     return (
       <div>
