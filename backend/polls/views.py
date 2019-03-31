@@ -58,6 +58,16 @@ def game_get(request, pk):
     responseDict['teams'] = list(Team.objects.filter(game=pk).values('id'))
     return JsonResponse(responseDict)
 
+# returns game details
+def game_get_invite(request, invite):
+    responseDict = get_object_or_404(Game.objects.all().values('id', 'target', 'invite', 'created_datetime', 'timeout', 'state'), invite=invite)
+    responseDict['finish_datetime'] = responseDict['created_datetime'] + responseDict['timeout']
+    responseDict['time_left_secs'] = responseDict['finish_datetime'] - timezone.now()
+    responseDict['status'] = 200
+    responseDict['message'] = "success"
+    responseDict['teams'] = list(Team.objects.filter(game=responseDict['id']).values('id'))
+    return JsonResponse(responseDict)
+
 # returns nothing
 def game_start(request, pk):
     game = get_object_or_404(Game, pk=pk)
@@ -95,7 +105,8 @@ def team(request, pk):
     responseDict['players'] = list(Player.objects.filter(team=pk).values('id'))
     if team.game.state == 2:
         words = [x['word'] for x in list(Player.objects.filter(team=team.id).values('word'))]
-        responseDict['score'] = wv.tabulateScore(responseDict['target'], words)
+        responseDict['score'] = wv.tabulateScore(team.game.target, words)
+        print("target = %s, words = %s, score = %s" % (team.game.target, str(words), str(responseDict['score'])))
     return JsonResponse(responseDict)
 
 # returns player details
