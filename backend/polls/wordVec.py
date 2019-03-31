@@ -22,7 +22,7 @@ class WordVec:
             print('loading w2v...')
             self.__model = KeyedVectors.load_word2vec_format(cur_dir + "/word2vec-50d.txt")
             with open(cur_dir + "/word_list.txt") as f:
-                self.__wordset = set([w for w in f])
+                self.__wordset = set([w.strip() for w in f])
             print('done.')
             self.__wordVec_loaded = True
 
