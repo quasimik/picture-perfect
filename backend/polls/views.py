@@ -56,12 +56,21 @@ def game_get(request, pk):
     responseDict['status'] = 200
     responseDict['message'] = "success"
     responseDict['teams'] = list(Team.objects.filter(game=pk).values('id'))
-    if responseDict['state'] == 2:
-        words = []
-        for t in responseDict['teams']:
-            words += [x['word'] for x in list(Player.objects.filter(team=t['id']).values('word'))]
-        responseDict['score'] = wv.tabulateScore(responseDict['target'], words)
     return JsonResponse(responseDict)
+
+# returns nothing
+def game_start(request, pk):
+    game = get_object_or_404(Game, pk=pk)
+    game.state = 1
+    game.save()
+    return SuccessResponse
+
+# returns nothing
+def game_end(request, pk):
+    game = get_object_or_404(Game, pk=pk)
+    game.state = 2
+    game.save()
+    return SuccessResponse
 
 # returns new team
 def game_create_team(request, pk):
@@ -84,6 +93,9 @@ def team(request, pk):
     team = get_object_or_404(Team, pk=pk)
     responseDict['game'] = team.game.id
     responseDict['players'] = list(Player.objects.filter(team=pk).values('id'))
+    if team.game.state == 2:
+        words = [x['word'] for x in list(Player.objects.filter(team=team.id).values('word'))]
+        responseDict['score'] = wv.tabulateScore(responseDict['target'], words)
     return JsonResponse(responseDict)
 
 # returns player details
