@@ -8,6 +8,10 @@
   margin: 0 auto !important;
 }
 
+.StartLabel {
+  text-align: left;
+}
+
 .Floating { 
   position: fixed;
   bottom: 5em;
