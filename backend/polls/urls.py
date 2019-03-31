@@ -16,7 +16,7 @@ urlpatterns = [
     path('player/<int:pk>/', views.player, name="player"), # get player status
     path('player/<int:pk>/switch_team/<int:team_pk>/', views.player_switch_team, name="player_switch_team"), # switch team
     path('player/<int:pk>/change_name/<str:name>/', views.player_change_name, name="player_change_name"), # change name
-    path('player/<int:pk>/update_word/<str:word>/', views.player_update_word, name="player_update_word"), # update played word in game
+    path('player/<int:pk>/update_word/<str:word>/<str:word_add>/', views.player_update_word, name="player_update_word"), # update played word in game
     # path('')
 
     # path('', views.IndexView.as_view(), name='index'),

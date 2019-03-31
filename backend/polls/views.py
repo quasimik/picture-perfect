@@ -11,6 +11,7 @@ ErrorResponse = JsonResponse({'status': 400, 'message': 'Something went wrong.'}
 SuccessResponse = JsonResponse({'status': 200, 'message': 'Success.'})
 wv = WordVec()
 
+# returns new player
 def game_create(request):
     try:
         game = Game()
@@ -28,9 +29,10 @@ def game_create(request):
     except:
         raise
     else:
-        return JsonResponse({'status': 200, 'message': 'Success', 'id': game.id})
-        # return redirect('/game_get/%s' % str(game.id))
+        # return JsonResponse({'status': 200, 'message': 'Success', 'id': game.id})
+        return redirect('/player/%s' % str(player.id))
 
+# returns new player
 def game_join(request, invite):
     # Joins the first team by default
     try:
@@ -43,39 +45,46 @@ def game_join(request, invite):
     except:
         raise
     else:
-        return SuccessResponse
+        # return SuccessResponse
+        return redirect('/player/%s' % str(player.id))
 
+# returns game details
 def game_get(request, pk):
     responseDict = get_object_or_404(Game.objects.all().values('id', 'target', 'invite', 'created_datetime'), pk=pk)
     responseDict['status'] = 200
     responseDict['message'] = "success"
     responseDict['teams'] = list(Team.objects.filter(game=pk).values('id'))
     return JsonResponse(responseDict)
-    # return HttpResponse('fuck u')
 
+# returns new team
 def game_create_team(request, pk):
     game = get_object_or_404(Game, pk=pk)
     team = Team(game=game)
     team.save()
-    return JsonResponse({'status': 200, 'message': 'Success', 'id': team.id})
+    # return JsonResponse({'status': 200, 'message': 'Success', 'id': team.id})
+    return redirect('/team/%s' % str(team.id))
 
+# returns nothing
 def game_change_target(request, pk, word):
     game = get_object_or_404(Game, pk=pk)
     game.target = word
     game.save()
     return SuccessResponse
 
+# returns team details (players in the team)
 def team(request, pk):
     responseDict = {'id': pk, 'status': 200, 'message': 'success'}
     responseDict['players'] = list(Player.objects.filter(team=pk).values('id'))
     return JsonResponse(responseDict)
 
+# returns player details
 def player(request, pk):
     responseDict = get_object_or_404(Player.objects.all().values('id', 'name', 'word', 'word_add', 'team', 'master'), pk=pk)
     responseDict['status'] = 200
     responseDict['message'] = "success"
     return JsonResponse(responseDict)
 
+# returns nothing
 def player_switch_team(request, pk, team_pk):
     player = get_object_or_404(Player, pk=pk)
     team = get_object_or_404(Team, pk=team_pk)
@@ -83,58 +92,28 @@ def player_switch_team(request, pk, team_pk):
     player.save()
     return SuccessResponse
 
+# returns nothing
 def player_change_name(request, pk, name):
     player = get_object_or_404(Player, pk=pk)
     player.name = name
     player.save()
     return SuccessResponse
 
-def player_update_word(request, pk, word):
+# returns nothing
+def player_update_word(request, pk, word, word_add):
     if not wv.wordExists(word):
         return JsonResponse({'status': 400, 'message': 'Word does not exist.'})
     player = get_object_or_404(Player, pk=pk)
     player.word = word
+    if word_add == 'add':
+        player.word_add = True 
+    elif word_add == 'sub':
+        player.word_add = False
+    else:
+        return JsonResponse({'status': 400, 'message': 'Malformed word_add field.'})
     player.save()
     return SuccessResponse
 
+# returns a nice HTML description of the API
 def index_view(request):
     return render(request, 'polls/index.html')
-
-# class IndexView(generic.ListView):
-#     template_name = 'polls/index.html'
-#     context_object_name = 'latest_question_list'
-
-#     def get_queryset(self):
-#         """Return the last five published questions."""
-#         return Question.objects.order_by('-pub_date')[:5]
-
-
-# # class DetailView(generic.DetailView):
-# #     model = Question
-# #     template_name = 'polls/detail.html'
-
-
-# # class ResultsView(generic.DetailView):
-# #     model = Question
-# #     template_name = 'polls/results.html'
-
-
-# # def vote(request, question_id):
-# #     question = get_object_or_404(Question, pk=question_id)
-# #     try:
-# #         selected_choice = question.choice_set.get(pk=request.POST['choice'])
-# #     except (KeyError, Choice.DoesNotExist):
-# #         # Redisplay the question voting form.
-# #         return render(request, 'polls/detail.html', {
-# #             'question': question,
-# #             'error_message': "You didn't select a choice.",
-# #         })
-# #     else:
-# #         selected_choice.votes += 1
-# #         selected_choice.save()
-# #         # Always return an HttpResponseRedirect after successfully dealing
-# #         # with POST data. This prevents data from being posted twice if a
-# #         # user hits the Back button.
-# #         return HttpResponseRedirect(
-# #             reverse('polls:results', args=(question.id,))
-# #         )
