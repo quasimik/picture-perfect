@@ -50,12 +50,17 @@ def game_join(request, invite):
 
 # returns game details
 def game_get(request, pk):
-    responseDict = get_object_or_404(Game.objects.all().values('id', 'target', 'invite', 'created_datetime', 'timeout'), pk=pk)
+    responseDict = get_object_or_404(Game.objects.all().values('id', 'target', 'invite', 'created_datetime', 'timeout', 'state'), pk=pk)
     responseDict['finish_datetime'] = responseDict['created_datetime'] + responseDict['timeout']
     responseDict['time_left_secs'] = responseDict['finish_datetime'] - timezone.now()
     responseDict['status'] = 200
     responseDict['message'] = "success"
     responseDict['teams'] = list(Team.objects.filter(game=pk).values('id'))
+    if responseDict['state'] == 2:
+        words = []
+        for t in responseDict['teams']:
+            words += [x['word'] for x in list(Player.objects.filter(team=t['id']).values('word'))]
+        responseDict['score'] = wv.tabulateScore(responseDict['target'], words)
     return JsonResponse(responseDict)
 
 # returns new team
