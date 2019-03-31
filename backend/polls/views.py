@@ -50,7 +50,9 @@ def game_join(request, invite):
 
 # returns game details
 def game_get(request, pk):
-    responseDict = get_object_or_404(Game.objects.all().values('id', 'target', 'invite', 'created_datetime'), pk=pk)
+    responseDict = get_object_or_404(Game.objects.all().values('id', 'target', 'invite', 'created_datetime', 'timeout'), pk=pk)
+    responseDict['finish_datetime'] = responseDict['created_datetime'] + responseDict['timeout']
+    responseDict['time_left_secs'] = responseDict['finish_datetime'] - timezone.now()
     responseDict['status'] = 200
     responseDict['message'] = "success"
     responseDict['teams'] = list(Team.objects.filter(game=pk).values('id'))
@@ -71,9 +73,11 @@ def game_change_target(request, pk, word):
     game.save()
     return SuccessResponse
 
-# returns team details (players in the team)
+# returns team details (game, and players in the team)
 def team(request, pk):
     responseDict = {'id': pk, 'status': 200, 'message': 'success'}
+    team = get_object_or_404(Team, pk=pk)
+    responseDict['game'] = team.game.id
     responseDict['players'] = list(Player.objects.filter(team=pk).values('id'))
     return JsonResponse(responseDict)
 
