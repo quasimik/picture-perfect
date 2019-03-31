@@ -28,7 +28,7 @@ class GameEnd extends Component {
         .then((data) => {
             console.log("teamscore", {name: "Team " + team, score: data.score});
             let tmp = this.state;
-            tmp.teamData.push({name: "Team " + team, score: Math.round(data.score * 10000)});
+            tmp.teamData.push({name: "Team " + team, score: Math.round(10000 / data.score) - 10000});
             this.setState(tmp);
             // return {name: "Team " + team, score: data.score};
         })
