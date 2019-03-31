@@ -29,7 +29,7 @@ class Data {
   game_status = (game_id) => {
     return fetch(server + 'game/' + game_id + '/')
     .then((response) => {
-      console.log("game_status", response)
+      // console.log("game_status", response)
       return response.json()
     })
     .catch((e) => {

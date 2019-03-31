@@ -26,12 +26,17 @@ class TeamJoin extends Component {
 
   componentDidMount() {
     let { invite } = this.props.match.params;
-    let { data } = this.props;
     console.log("invite:", invite);
-    if(data.game.invite === "" && data.game.status !== 2) {
-      console.log("joining", invite)
-      this.props.joinGame(invite)
-    }
+    db.game_status_invite(invite)
+    .then((data) => {
+      if(data.status === 1) {
+        console.log("joining", invite)
+        this.props.joinGame(invite)
+      }
+      else {
+        this.props.getGame(data.id);
+      }
+    });
   }
 
   dataToMember = (data) => {
@@ -69,7 +74,8 @@ class TeamJoin extends Component {
         <Segment>
           <h2>Hello {playerName}, join a team!</h2>
           <div>{boxes}</div>
-         </Segment>
+          <Button primary onClick={this.props.createTeam}>Create a new team</Button>
+        </Segment>
       </div>
     );
   }

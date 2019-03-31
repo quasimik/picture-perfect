@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Link, withRouter } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 import { Menu, Container, Button } from 'semantic-ui-react';
 import './App.css';
 import db from '../db'
@@ -34,6 +34,12 @@ class App extends Component {
       master: false
     }
   };
+
+  setGameId = (id) => {
+    let tmp = this.state;
+    tmp.game.id = id;
+    this.setState(tmp);
+  }
 
   createGame = () => {
     db.new_game()
@@ -100,7 +106,7 @@ class App extends Component {
 
   getGame = (id) => db.game_status(id)
     .then((data) => {
-      console.log(data)
+      // console.log(data)
       let tmp = this.state;
       tmp.game.id = id;
       tmp.game.target = data.target;
@@ -143,14 +149,15 @@ class App extends Component {
               case 1:
                 return <GameRoom {...props} data={this.state}/>;
               case 2:
-                return <GameEnd {...props} data={this.state} />;
+                return <GameEnd {...props} data={this.state} setGameId={this.setGameId} />;
               default:
                 return <TeamJoin {...props} 
                   data={this.state} 
                   joinGame={this.joinGame} 
                   joinTeam={this.switchTeam}
                   createTeam={this.createTeam}
-                  switchTeam={this.switchTeam}/>;
+                  switchTeam={this.switchTeam}
+                  getGame={this.getGame}/>;
             }}
           }
         />
