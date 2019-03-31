@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Icon, Segment, Divider, Grid, Form, Input, Container, Card, List, Responsive, Dropdown } from 'semantic-ui-react';
 
+// Needs the target word along with all Teams, each Team's score, and each Team's closest word
 class GameEnd extends Component {
     render() {
         const target = this.props.target;

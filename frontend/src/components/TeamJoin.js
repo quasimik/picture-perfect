@@ -9,7 +9,8 @@ class Member {
 }
 
 
-// TeamJoin expects a prop with the client's name
+// TeamJoin expects a prop with the player's key and name. Also requires dictionary for state.teamList (key=team name, value=array of Member objects)
+// Also time is currently hardcoded to be just 500, will need up add an updater
 class TeamJoin extends Component {    
 
     state = {
