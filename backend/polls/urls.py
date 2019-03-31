@@ -7,6 +7,7 @@ urlpatterns = [
     # path('word/get/') # get random word
     # path('word/get/<int:length>/<float:freq>/') # get random word, restricted by length and minimum freq
     path('game/create/', views.game_create, name="game_create") # start new game
+    path('game/join/<str:invite>/', views.game_join, name="game_join") # join game
     path('game/<int:pk>/', views.game_get, name="game_get") # get game status
     path('game/<int:pk>/create_team/', views.game_create_team, name="game_create_team") # create new team in game
     path('game/<int:pk>/change_target/<str:word>/', views.game_change_target, name="game_change_target") # change target word
