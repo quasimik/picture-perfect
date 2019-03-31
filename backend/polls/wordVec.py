@@ -41,6 +41,12 @@ class WordVec:
         return word in self.__wordset
 
     def tabulateScore(self, target, words):
-        return (self.__cosineSimilarity(self.__model[target], self.__combineWords(words)) /
-                sum([self.__cosineSimilarity(self.__model[target], self.__model[word]) for word in words]))
+        words_filtered = []
+        for word in words:
+            if self.wordExists(word):
+                words_filtered.append(word)
+        if len(words_filtered) == 0:
+            return 0
+        return (self.__cosineSimilarity(self.__model[target], self.__combineWords(words_filtered)) /
+                sum([self.__cosineSimilarity(self.__model[target], self.__model[word]) for word in words_filtered]))
 
