@@ -10,7 +10,7 @@ class StartPage extends Component {
                     <Grid.Column>
                         <Divider horizontal>Create a new game</Divider>
                         <br/><br/><br/><br/>
-                        <StartPageButton buttonText="Create" color="red"/>
+                        <StartPageButton buttonText="Create" color="red" onClick={this.props.create}/>
                     </Grid.Column>
                     <Grid.Column>
                         <Divider horizontal>Join an existing game</Divider>
@@ -36,7 +36,7 @@ class StartPageButton extends Component {
         const buttonColor = (this.props.color) ? this.props.color : "white";
         return (
             <div>
-                <Button animated color={buttonColor}>
+                <Button animated color={buttonColor} onClick={this.props.onClick}>
                     <Button.Content visible>{this.props.buttonText}</Button.Content>
                     <Button.Content hidden><Icon name='arrow right'/></Button.Content>
                 </Button>
