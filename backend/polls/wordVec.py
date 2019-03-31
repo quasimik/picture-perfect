@@ -1,6 +1,8 @@
 from gensim.models import KeyedVectors
 import numpy as np
 import random
+import os
+cur_dir = os.path.dirname(os.path.abspath(__file__))
 
 class WordVec:
     __shared_state = {}
@@ -9,10 +11,14 @@ class WordVec:
         self.__dict__ = self.__shared_state
         try:
             if self.__wordVec_loaded is False:
-                self.__model = KeyedVectors.load_word2vec_format("word2vec-50d.txt")
+                print('loading w2v...')
+                self.__model = KeyedVectors.load_word2vec_format(cur_dir + "/word2vec-50d.txt")
+                print('done.')
                 self.__wordVec_loaded = True
         except AttributeError:
-            self.__model = KeyedVectors.load_word2vec_format("word2vec-50d.txt")
+            print('loading w2v...')
+            self.__model = KeyedVectors.load_word2vec_format(cur_dir + "/word2vec-50d.txt")
+            print('done.')
             self.__wordVec_loaded = True
 
     def __cosineSimilarity(v1, v2):
