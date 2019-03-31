@@ -102,3 +102,7 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+
+# custom shitz boiiiis
+word2vec-50d.txt

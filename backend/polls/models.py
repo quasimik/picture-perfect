@@ -14,7 +14,8 @@ class Word(models.Model):
         return ("%s : %s" % (self.word, str(self.freq)))
 
 class Game(models.Model):
-    target = models.ForeignKey(Word, on_delete=models.PROTECT)
+    # target = models.ForeignKey(Word, on_delete=models.PROTECT)
+    target = models.CharField(max_length=200)
     master = models.ForeignKey('Player', on_delete=models.CASCADE)
     invite = models.CharField(max_length=200) # three 4-letter words?
     created_date = models.DateTimeField(auto_now_add=True)
@@ -28,7 +29,9 @@ class Team(models.Model):
 
 class Player(models.Model):
     name = models.CharField(max_length=200)
-    word = models.ForeignKey(Word, on_delete=models.PROTECT)
+    # word = models.ForeignKey(Word, on_delete=models.PROTECT)
+    word = models.CharField(max_length=200)
+    word_add = models.BooleanField() # add or sub
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
 
 class Question(models.Model):

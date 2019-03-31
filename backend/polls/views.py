@@ -4,11 +4,28 @@ from django.urls import reverse
 from django.views import generic
 
 from .models import *
-
+import WordVec
 
 def game_create(request):
+    try:
+        game = Game()
+        game.target = WordVec.getWord()
+        game.invite = WordVec.getWord() + " " + WordVec.getWord() + " " + WordVec.getWord()
+        team = Team(game=game)
+        player = Player(team=team)
+        player.name = player.pk
+    except:
+
+    game.save()
+    team.save()
+    player.save()
+
 
 def game_get(request, pk):
+
+def game_join(request, invite):
+
+def game_create_team(request, pk):
 
 def game_change_target(request, pk, word):
 
