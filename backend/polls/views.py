@@ -1,5 +1,5 @@
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect # noqa: 401
-from django.shortcuts import get_object_or_404, render, get_list_or_404
+from django.shortcuts import get_object_or_404, render, get_list_or_404, redirect
 from django.urls import reverse
 from django.views import generic
 from django.forms.models import model_to_dict
@@ -29,6 +29,7 @@ def game_create(request):
         raise
     else:
         return JsonResponse({'status': 200, 'message': 'Success', 'id': game.id})
+        # return redirect('/game_get/%s' % str(game.id))
 
 def game_join(request, invite):
     # Joins the first team by default
