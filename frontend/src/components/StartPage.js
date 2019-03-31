@@ -49,7 +49,7 @@ class StartPageField extends Component {
     render() {
         return (
             <Form.Field>
-                <label>{this.props.label}</label>
+                <label className="StartLabel">{this.props.label}</label>
                 <Input placeholder={this.props.placeholder}></Input>
             </Form.Field>
         )
