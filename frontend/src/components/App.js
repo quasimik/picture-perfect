@@ -126,12 +126,12 @@ class App extends Component {
     (this.state.game.id !== 0) && this.getGame(this.state.game.id);
     return (
       <div className="App">
-        <Menu fixed='top' inverted size="massive">
+        <Menu fixed='top' inverted size="huge">
           <Container text>
             {/* {this.props.history && 
               <Menu.Item icon="left arrow" onClick={this.props.history.goBack} />} */}
             <Menu.Item header>Lexica</Menu.Item>
-            <Menu.Item header>Room: {this.state.game.invite} </Menu.Item>
+            {this.state.game.invite && <Menu.Item header>Room: {this.state.game.invite} </Menu.Item>}
             {/* <Menu.Item header>Time Remaining: 500</Menu.Item> */}
             {this.state.game.status !== undefined && this.state.game.status !== 2 &&
             <Menu.Item>
@@ -142,25 +142,27 @@ class App extends Component {
             </Menu.Item>}
           </Container>
         </Menu>
-        <Route exact path="/" render={(props) => <StartPage {...props} create={this.createGame} data={this.state}/>}/>
-        <Route path="/:invite" 
-          render={(props) => {
-            switch(this.state.game.status) {
-              case 1:
-                return <GameRoom {...props} data={this.state}/>;
-              case 2:
-                return <GameEnd {...props} data={this.state} setGameId={this.setGameId} />;
-              default:
-                return <TeamJoin {...props} 
-                  data={this.state} 
-                  joinGame={this.joinGame} 
-                  joinTeam={this.switchTeam}
-                  createTeam={this.createTeam}
-                  switchTeam={this.switchTeam}
-                  getGame={this.getGame}/>;
-            }}
-          }
-        />
+        <Container text>
+          <Route exact path="/" render={(props) => <StartPage {...props} create={this.createGame} data={this.state}/>}/>
+          <Route path="/:invite" 
+            render={(props) => {
+              switch(this.state.game.status) {
+                case 1:
+                  return <GameRoom {...props} data={this.state}/>;
+                case 2:
+                  return <GameEnd {...props} data={this.state} setGameId={this.setGameId} />;
+                default:
+                  return <TeamJoin {...props} 
+                    data={this.state} 
+                    joinGame={this.joinGame} 
+                    joinTeam={this.switchTeam}
+                    createTeam={this.createTeam}
+                    switchTeam={this.switchTeam}
+                    getGame={this.getGame}/>;
+              }}
+            }
+          />
+        </Container>
       </div>
     );
   }
