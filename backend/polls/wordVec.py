@@ -26,7 +26,7 @@ class WordVec:
             print('done.')
             self.__wordVec_loaded = True
 
-    def __cosineSimilarity(v1, v2):
+    def __cosineSimilarity(self, v1, v2):
         return np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2))
 
     def __combineWords(self, words):
