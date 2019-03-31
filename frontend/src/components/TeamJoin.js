@@ -29,7 +29,7 @@ class TeamJoin extends Component {
     console.log("invite:", invite);
     db.game_status_invite(invite)
     .then((data) => {
-      if(data.status === 1) {
+      if(data.status !== 2) {
         console.log("joining", invite)
         this.props.joinGame(invite)
       }
