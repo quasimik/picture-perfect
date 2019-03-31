@@ -20,6 +20,7 @@ class App extends Component {
               <Menu.Item icon="left arrow" onClick={this.props.history.goBack} />}
             <Menu.Item header as={Link} to="/">Pic Perfect
             </Menu.Item>
+            <Menu.Item header>Room ID</Menu.Item>
           </Container>
         </Menu>
         <Route exact path="/" render={(props) => <TeamJoin {...props} playerName="Bobbeh" playerKey="9"/>}/>
