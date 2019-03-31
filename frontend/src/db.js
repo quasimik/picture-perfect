@@ -37,6 +37,17 @@ class Data {
     });
   }
 
+  game_status_invite = (invite) => {
+    return fetch(server + 'game/get/' + invite + '/')
+    .then((response) => {
+      console.log("game_status", response)
+      return response.json()
+    })
+    .catch((e) => {
+      console.error(e);
+    });
+  }
+
   create_team = (game_id) => {
     return fetch(server + 'game/' + game_id + '/create_team/')
     .then((response) => {
