@@ -12,6 +12,10 @@
   text-align: left;
 }
 
+.GameEnd {
+  text-align: left;
+}
+
 .Floating { 
   position: fixed;
   bottom: 5em;
