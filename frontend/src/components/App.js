@@ -133,3 +133,7 @@ class App extends Component {
 }
 
 export default withRouter(App);
+
+// GameRoom requires teamWordList=[ {name: word}, ... ] where name and word are strings
+// GameEnd  requires teamData=[ {name: teamName, word: teamWord, score: teamScore }, ... ] where name, word, and score are object fields, teamName and teamWord are strings, and teamScore is an integer (can also be string)
+// Both require target=targetWord where targetWord is a string
