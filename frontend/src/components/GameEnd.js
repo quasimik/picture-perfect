@@ -3,9 +3,6 @@ import { Button, Icon, Segment, Divider, Grid, Form, Input, Container, Card, Lis
 
 class GameEnd extends Component {
     render() {
-        const teamName = this.props.teamName;
-        const teamWords = this.props.teamWords;
-        const buttonType = this.state.buttonType; // or 'minus'
         const target = this.props.target;
         //const dataList = Object.entries(teamWords).map( (name, word) => <GameListEntry name={name} word={word}/>);
         //*
