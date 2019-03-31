@@ -5,6 +5,8 @@ import './App.css';
 
 import StartPage from './StartPage';
 import TeamJoin from './TeamJoin';
+import GameRoom from './GameRoom';
+import GameEnd from './GameEnd';
 class App extends Component {
 
   state = {
@@ -21,9 +23,10 @@ class App extends Component {
             <Menu.Item header as={Link} to="/">Pic Perfect
             </Menu.Item>
             <Menu.Item header>Room ID</Menu.Item>
+            <Menu.Item header>Time Remaining: 500</Menu.Item>
           </Container>
         </Menu>
-        <Route exact path="/" render={(props) => <StartPage {...props} playerName="Bobbeh" playerKey="9"/>}/>
+        <Route exact path="/" render={(props) => <GameEnd {...props} playerName="Bobbeh" playerKey="9" teamName="Team 1" teamWord="Wine" target="Alcohol"/>}/>
         <Route path="/:room"  render={(props) => <div/>} />
       </div>
     );
