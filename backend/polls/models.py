@@ -16,9 +16,8 @@ class Word(models.Model):
 class Game(models.Model):
     # target = models.ForeignKey(Word, on_delete=models.PROTECT)
     target = models.CharField(max_length=200)
-    master = models.ForeignKey('Player', on_delete=models.CASCADE)
     invite = models.CharField(max_length=200) # three 4-letter words?
-    created_date = models.DateTimeField(auto_now_add=True)
+    created_datetime = models.DateTimeField(default=timezone.now)
     timeout = models.DurationField(default=datetime.timedelta(minutes=2))
 
     def seconds_remaining(self):
@@ -31,8 +30,9 @@ class Player(models.Model):
     name = models.CharField(max_length=200)
     # word = models.ForeignKey(Word, on_delete=models.PROTECT)
     word = models.CharField(max_length=200)
-    word_add = models.BooleanField() # add or sub
+    word_add = models.BooleanField(default=True) # add or sub
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    master = models.BooleanField(default=False) # is game master
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)

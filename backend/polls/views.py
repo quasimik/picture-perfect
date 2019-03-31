@@ -1,45 +1,70 @@
-from django.http import HttpResponse, HttpResponseRedirect # noqa: 401
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect # noqa: 401
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 
 from .models import *
-import WordVec
+from .wordVec import WordVec
+
+ErrorResponse = JsonResponse({'status': 400, 'message': 'Something went wrong.'})
+SuccessResponse = JsonResponse({'status': 200, 'message': 'Success.'})
+wv = WordVec()
 
 def game_create(request):
     try:
         game = Game()
-        game.target = WordVec.getWord()
-        game.invite = WordVec.getWord() + " " + WordVec.getWord() + " " + WordVec.getWord()
+        game.target = wv.getWord()
+        game.invite = wv.getWord() + "-" + wv.getWord() + "-" + wv.getWord()
+        game.save()
+
         team = Team(game=game)
+        team.save()
+
         player = Player(team=team)
-        player.name = player.pk
+        player.name = wv.getWord()
+        player.master = True
+        player.save()
     except:
-
-    game.save()
-    team.save()
-    player.save()
-
-
-def game_get(request, pk):
+        raise
+    else:
+        return SuccessResponse
 
 def game_join(request, invite):
+    try:
+        print(invite)
+        game = Game.objects.get(invite=invite)
+        team = get_object_or_404(Team, game=game)
+        player = Player(team=team)
+        player.name = wv.getWord()
+        player.save()
+    except:
+        raise
+    else:
+        return SuccessResponse
+
+def game_get(request, pk):
+    pass
 
 def game_create_team(request, pk):
+    pass
 
 def game_change_target(request, pk, word):
+    pass
 
 def team(request, pk):
+    pass
 
 def player(request, pk):
+    pass
 
 def player_switch_team(request, pk, team_pk):
+    pass
 
 def player_change_name(request, pk, name):
+    pass
 
 def player_update_word(request, pk, word):
-
-# path('')
+    pass
 
 
 class IndexView(generic.ListView):
