@@ -3,6 +3,13 @@ import { Button, Icon, Segment, Divider, Grid, Form, Input, Container } from 'se
 
 // Component requires no props
 class StartPage extends Component {
+
+    componentDidMount(){
+        if(this.props.data.game.invite !== "") {
+            this.props.history.push('/' + this.props.data.game.invite);
+        }
+    }
+
     render() {
         return (
             <Container>
@@ -10,7 +17,7 @@ class StartPage extends Component {
                 <Grid columns={2} stackable>
                     <Grid.Column>
                         <Divider horizontal>Create a new game</Divider>
-                        <br/><br/><br/><br/>
+                        <br/><br/><br/>
                         <StartPageButton buttonText="Create" color="red" onClick={this.props.create}/>
                     </Grid.Column>
                     <Grid.Column>

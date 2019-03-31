@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Link, withRouter } from 'react-router-dom';
-import { Menu, Container } from 'semantic-ui-react';
+import { Menu, Container, Button } from 'semantic-ui-react';
 import './App.css';
 import db from '../db'
 
@@ -15,12 +15,14 @@ class App extends Component {
       id: 0,
       invite: "",
       timeout: 0,
+      status: undefined,
       target: "",
       teams: []
     },
     team: {
       id: 0,
       game: 0,
+      score: undefined,
       players: []
     },
     player: {
@@ -61,19 +63,13 @@ class App extends Component {
     .then(this.getTeam)
     .then(this.getGame);
 
-  createTeam = (id) => {
-    db.create_team(id)
-    .then((data) => {
-
-    })
-    .then(this.getGame(id))
-  }
+  createTeam = (id) => db.create_team(id)
+    .then(this.parseTeam)
+    .then(this.getGame)
 
   switchTeam = (player_id, team_id) => db.switch_team(player_id, team_id)
-    .then((data) => {
-      return data.id
-    })
-    .then(this.getTeam);
+    .then(this.parseTeam)
+    .then(this.getGame);
 
   getPlayer = (id) => db.player_status(id)
     .then((data) => {
@@ -90,15 +86,17 @@ class App extends Component {
     });
 
   getTeam = (id) => db.team_status(id)
-    .then((data) => {
-      console.log(data)
-      let tmp = this.state;
-      tmp.team.id = id;
-      tmp.team.game = data.game;
-      tmp.team.players = data.players;
-      this.setState(tmp);
-      return data.game;
-    });
+    .then(this.parseTeam);
+
+  parseTeam = (data) => {
+    console.log(data)
+    let tmp = this.state;
+    tmp.team.id = data.id;
+    tmp.team.game = data.game;
+    tmp.team.players = data.players;
+    this.setState(tmp);
+    return data.game;
+  }
 
   getGame = (id) => db.game_status(id)
     .then((data) => {
@@ -108,25 +106,54 @@ class App extends Component {
       tmp.game.target = data.target;
       tmp.game.invite = data.invite;
       tmp.game.teams = data.teams;
+      tmp.game.status = data.state;
       this.setState(tmp);
       return data.game;
     });
 
+  startGame = () => {db.start_game(this.state.game.id)};
+  endGame = () => {db.end_game(this.state.game.id)};
+
+
   render() {
-    console.log("history", this.props.history);
+    // console.log("history", this.props.history);
+    (this.state.game.id !== 0) && this.getGame(this.state.game.id);
     return (
       <div className="App">
         <Menu fixed='top' inverted color="teal">
           <Container text>
             {this.props.history && 
               <Menu.Item icon="left arrow" onClick={this.props.history.goBack} />}
-            <Menu.Item header as={Link} to="/">Pic Perfect</Menu.Item>
-            <Menu.Item header>Room: </Menu.Item>
-            <Menu.Item header>Time Remaining: 500</Menu.Item>
+            <Menu.Item header>Lexica</Menu.Item>
+            <Menu.Item header>Room: {this.state.game.invite} </Menu.Item>
+            {/* <Menu.Item header>Time Remaining: 500</Menu.Item> */}
+            <Menu.Item>
+              {this.state.game.status !== undefined && this.state.game.status !== 2 &&
+              <Button primary 
+                content={this.state.game.status === 0 ? "Start" : "End"}
+                onClick={this.state.game.status === 0 ? this.startGame : this.endGame}
+              />}
+            </Menu.Item>
           </Container>
         </Menu>
-        <Route exact path="/" render={(props) => <StartPage {...props} create={this.createGame} />}/>
-        <Route path="/:room"  render={(props) => <TeamJoin {...props} data={this.state} join={this.joinGame} />} />
+        <Route exact path="/" render={(props) => <StartPage {...props} create={this.createGame} data={this.state}/>}/>
+        <Route path="/:invite" 
+          render={(props) => {
+            switch(this.state.game.status) {
+              case 1:
+                return <GameRoom {...props} data={this.state}/>;
+              case 2:
+                return <GameEnd {...props} data={this.state} />;
+              default:
+                return <TeamJoin {...props} 
+                  data={this.state} 
+                  joinGame={this.joinGame} 
+                  joinTeam={this.switchTeam}
+                  createTeam={this.createTeam}
+                  switchTeam={this.switchTeam}/>;
+            }}
+          }
+        />
       </div>
     );
   }
